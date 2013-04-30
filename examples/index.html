@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css"/>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css"/>
+    <style>
+        #map {
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+<script src="../src/L.Control.SelectLayer.js"></script>
+<script>
+    function test() {
+        var url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                attribution = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+
+        var minimal = L.tileLayer(url, {styleId:22677, attribution:attribution}),
+                midnight = L.tileLayer(url, {styleId:999, attribution:attribution}),
+                motorways = L.tileLayer(url, {styleId:46561, attribution:attribution});
+
+        var map = L.map('map', {
+            center:new L.LatLng(39.73, -104.99),
+            zoom:10,
+            layers:[minimal, motorways]
+        });
+
+        var baseMaps = {
+            "Minimal":minimal,
+            "Night View":midnight
+        };
+
+        var overlayMaps = {
+            "Motorways":motorways
+        };
+
+        var control = L.control.selectLayers(baseMaps, overlayMaps)
+        control.addTo(map);
+    }
+
+    test()
+</script>
+</body>
+</html>
