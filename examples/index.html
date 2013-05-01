@@ -17,28 +17,37 @@
 <script src="../src/L.Control.SelectLayer.js"></script>
 <script>
     function test() {
-        var url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                attribution = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+        var attribution = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
 
-        var minimal = L.tileLayer(url, {styleId:22677, attribution:attribution}),
-                midnight = L.tileLayer(url, {styleId:999, attribution:attribution}),
-                motorways = L.tileLayer(url, {styleId:46561, attribution:attribution});
+        var mapnik = L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {attribution:attribution}
+        )
+        var blackAndWhite = L.tileLayer(
+                'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+                {attribution:attribution}
+        )
+        var clouds = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png', {
+            attribution:'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            opacity:0.5
+        })
 
         var map = L.map('map', {
             center:new L.LatLng(39.73, -104.99),
             zoom:10,
-            layers:[minimal, motorways]
+            layers:[mapnik, clouds]
         });
 
         var baseMaps = {
-            "Minimal":minimal,
-            "Night View":midnight
+            "Mapnik":mapnik,
+            "Black and Whilte":blackAndWhite
         };
 
         var overlayMaps = {
-            "Motorways":motorways
+            "Clouds":clouds
         };
 
+        //        var control = L.control.layers(baseMaps, overlayMaps)
         var control = L.control.selectLayers(baseMaps, overlayMaps)
         control.addTo(map);
     }
