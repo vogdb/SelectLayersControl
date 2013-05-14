@@ -2,11 +2,9 @@
  * Created: vogdb Date: 4/30/13 Time: 6:07 PM
  */
 
-L.Control.SelectLayers = L.Control.Layers.extend({
+L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     _initLayout:function () {
-        L.Control.Layers.prototype._initLayout.call(this)
-
-        this.currentBaseLayer = this._findCurrentBaseLayer()
+        L.Control.ActiveLayers.prototype._initLayout.call(this)
 
         //replace this._baseLayersList <div> on the <select>
         var savedClassName = this._baseLayersList.className
@@ -29,23 +27,13 @@ L.Control.SelectLayers = L.Control.Layers.extend({
         this._handlingClick = true;
 
         this._map.addLayer(layer)
-        this._map.removeLayer(this.currentBaseLayer)
+        this._map.removeLayer(this._activeBaseLayer)
         this._map.setZoom(this._map.getZoom());
         this._map.fire('baselayerchange', {layer:layer});
-        this.currentBaseLayer = layer
+        this._activeBaseLayer = layer
 
         //to be compatible with parent
         this._handlingClick = false;
-    },
-
-    _findCurrentBaseLayer:function () {
-        var layers = this._layers
-        for (var layerKey in layers) {
-            if (!layers[layerKey].overlay) {
-                return layers[layerKey].layer
-            }
-        }
-        throw new Error('Control doesn\'t have any layers!')
     },
 
     _addItem:function (obj) {
