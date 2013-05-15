@@ -5,8 +5,8 @@ module.exports = function (grunt) {
         pkg:grunt.file.readJSON('package.json'),
         banner:'/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
             '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-            '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-            '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+            '<%= (pkg.homepage ? "* " + pkg.homepage : pkg.repository.url) + "\\n" %>' +
+            '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;' +
             ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
         jshint:{
             options:{
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
             },
             dist:{
                 src:'src/SelectLayers.js',
-                dest:'dist/<%= pkg.name %>.min.js'
+                dest:'dist/leaflet.select-layers.min.js'
             }
         },
         watch:{

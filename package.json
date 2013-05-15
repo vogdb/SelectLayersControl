@@ -7,7 +7,7 @@
         "url":"https://github.com/vogdb/SelectLayersControl.git"
     },
     "author":"Sanin Aleksey aka vogdb",
-    "license":[
+    "licenses":[
         {
             "type":"MIT"
         }
