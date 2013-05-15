@@ -1,3 +1,6 @@
+#Important
+Please look at the [issue](https://github.com/vogdb/SelectLayersControl/issues/1) before using this plugin.
+
 # Leaflet.SelectLayersControl
 A Leaflet plugin which adds new control to switch between different layers on the map. New control extends [L.Control.ActiveLayers](https://github.com/vogdb/Leaflet.ActiveLayers "ActiveLayers") and replaces radio button panel with select tag. This plugin will be useful for you when you have a lot of the base layers in the control. For example.
 
