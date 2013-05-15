@@ -3,15 +3,48 @@
  */
 
 L.Control.SelectLayers = L.Control.ActiveLayers.extend({
-    _initLayout:function () {
-        L.Control.ActiveLayers.prototype._initLayout.call(this)
 
-        //replace this._baseLayersList <div> on the <select>
-        var savedClassName = this._baseLayersList.className
-        this._form.removeChild(this._baseLayersList)
-        this._baseLayersList = L.DomUtil.create('select', savedClassName)
-        this._form.insertBefore(this._baseLayersList, this._form.firstChild)
+    _initLayout: function () {
+        var className = 'leaflet-control-layers',
+            container = this._container = L.DomUtil.create('div', className);
+
+        L.DomEvent.disableClickPropagation(container);
+        if (!L.Browser.touch) {
+            L.DomEvent.on(container, 'mousewheel', L.DomEvent.stopPropagation);
+        } else {
+            L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation);
+        }
+
+        var form = this._form = L.DomUtil.create('form', className + '-list');
+
+        if (this.options.collapsed) {
+            var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
+            link.href = '#';
+            link.title = 'Layers';
+
+            if (L.Browser.touch) {
+                L.DomEvent
+                    .on(link, 'click', L.DomEvent.stopPropagation)
+                    .on(link, 'click', L.DomEvent.preventDefault)
+                    .on(link, 'click', this._expand, this);
+            } else {
+                L.DomEvent
+                    .on(container, 'mouseover', this._expand, this)
+                    .on(container, 'mouseout', this._collapse, this);
+                L.DomEvent.on(link, 'focus', this._expand, this);
+            }
+
+            this._map.on('movestart', this._collapse, this);
+        } else {
+            this._expand();
+        }
+
+        this._baseLayersList = L.DomUtil.create('select', className + '-base', form);
         L.DomEvent.on(this._baseLayersList, 'change', this._onBaseLayerOptionChange, this)
+        this._separator = L.DomUtil.create('div', className + '-separator', form);
+        this._overlaysList = L.DomUtil.create('div', className + '-overlays', form);
+
+        container.appendChild(form);
     },
 
     _onBaseLayerOptionChange:function () {
