@@ -37,7 +37,7 @@ module.exports = function (grunt) {
                 banner:'<%= banner %>'
             },
             dist:{
-                src:'src/L.Control.SelectLayer.js',
+                src:'src/SelectLayers.js',
                 dest:'dist/<%= pkg.name %>.min.js'
             }
         },

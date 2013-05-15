@@ -47,7 +47,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
         container.appendChild(form);
     },
 
-    _onBaseLayerOptionChange:function () {
+    _onBaseLayerOptionChange: function () {
         var selectedLayerIndex = this._baseLayersList.selectedIndex
         var selectedLayerOption = this._baseLayersList.options[selectedLayerIndex]
         var selectedLayer = this._layers[selectedLayerOption.layerId]
@@ -55,21 +55,21 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
         this._changeBaseLayer(selectedLayer.layer)
     },
 
-    _changeBaseLayer:function (layer) {
+    _changeBaseLayer: function (layer) {
         //to be compatible with parent
         this._handlingClick = true;
 
         this._map.addLayer(layer)
         this._map.removeLayer(this._activeBaseLayer)
         this._map.setZoom(this._map.getZoom());
-        this._map.fire('baselayerchange', {layer:layer});
+        this._map.fire('baselayerchange', {layer: layer});
         this._activeBaseLayer = layer
 
         //to be compatible with parent
         this._handlingClick = false;
     },
 
-    _addItem:function (obj) {
+    _addItem: function (obj) {
         if (obj.overlay) {
             //overlay items is handled the same as before
             return L.Control.Layers.prototype._addItem.call(this, obj)
@@ -79,7 +79,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
         }
     },
 
-    _createOptionElement:function (obj) {
+    _createOptionElement: function (obj) {
         var option = document.createElement('option')
         option.layerId = L.stamp(obj.layer)
         option.innerHTML = obj.name
