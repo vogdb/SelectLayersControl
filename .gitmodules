@@ -1,3 +1,0 @@
-[submodule "submodule/ActiveLayers"]
-	path = submodule/ActiveLayers
-	url = git@github.com:vogdb/Leaflet.ActiveLayers.git
