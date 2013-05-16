@@ -12,7 +12,9 @@
             "type":"MIT"
         }
     ],
-    "dependencies":{},
+    "dependencies":{
+        "leaflet.active-layers": "git://github.com/vogdb/Leaflet.ActiveLayers.git"
+    },
     "devDependencies":{
         "grunt-contrib-watch":"~0.3.1",
         "grunt-contrib-jshint":"~0.3.0",
