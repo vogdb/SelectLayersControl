@@ -2,8 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css"/>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css"/>
+    <link rel="stylesheet"
+          href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css"/>
+    <link rel="stylesheet"
+          href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css"/>
     <style>
         #map {
             width: 640px;
@@ -21,34 +23,31 @@
         var attribution = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
 
         var mapnik = L.tileLayer(
-                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {attribution:attribution}
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                , {attribution: attribution}
         )
         var blackAndWhite = L.tileLayer(
-                'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-                {attribution:attribution}
+                'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png'
+                , {attribution: attribution}
         )
         var clouds = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png', {
-            attribution:'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
-            opacity:0.5
+            attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>'
+            , opacity: 0.5
         })
 
         var map = L.map('map', {
-            center:new L.LatLng(39.73, -104.99),
-            zoom:10,
-            layers:[mapnik, clouds]
+            center: new L.LatLng(39.73, -104.99), zoom: 10, layers: [mapnik, clouds]
         });
 
         var baseMaps = {
-            "Mapnik":mapnik,
-            "Black and Whilte":blackAndWhite
+            "Mapnik": mapnik, "Black and Whilte": blackAndWhite
         };
 
         var overlayMaps = {
-            "Clouds":clouds
+            "Clouds": clouds
         };
 
-        //        var control = L.control.layers(baseMaps, overlayMaps)
+        //var control = L.control.layers(baseMaps, overlayMaps)
         var control = L.control.selectLayers(baseMaps, overlayMaps)
         control.addTo(map);
     }
