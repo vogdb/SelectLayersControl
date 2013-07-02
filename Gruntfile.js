@@ -11,31 +11,6 @@ module.exports = function (grunt) {
       + ' Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;'
       + ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n*/\n'
 
-    , jshint: {
-        options: {
-          curly: true
-          , eqeqeq: true
-          , immed: true
-          , latedef: true
-          , newcap: true
-          , noarg: true
-          , sub: true
-          , undef: true
-          , unused: true
-          , boss: true
-          , eqnull: true
-          , browser: true
-          , asi: true
-          , globals: {}
-        }
-      , gruntfile: {
-          src: 'Gruntfile.js'
-      }
-      , lib_test: {
-          src: ['lib/**/*.js', 'test/**/*.js']
-      }
-    }
-
     , uglify: {
         options: {
           banner: '<%= banner %>'
@@ -48,18 +23,17 @@ module.exports = function (grunt) {
 
     , watch: {
         gruntfile: {
-          files: '<%= jshint.gruntfile.src %>'
-          , tasks: ['jshint:gruntfile']
+          files: '<%= uglify.dist.src %>'
+          , tasks: ['default']
         }
     }
 
   })
 
-  grunt.loadNpmTasks('grunt-contrib-jshint')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-uglify')
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'uglify'])
+  grunt.registerTask('default', ['uglify'])
 
 }
