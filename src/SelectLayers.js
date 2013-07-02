@@ -52,18 +52,18 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     var selectedLayerOption = this._baseLayersList.options[selectedLayerIndex]
     var selectedLayer = this._layers[selectedLayerOption.layerId]
 
-    this._changeBaseLayer(selectedLayer.layer)
+    this._changeBaseLayer(selectedLayer)
   },
 
-  _changeBaseLayer: function (layer) {
+  _changeBaseLayer: function (layerObj) {
     //to be compatible with parent
     this._handlingClick = true
 
-    this._map.addLayer(layer)
-    this._map.removeLayer(this._activeBaseLayer)
+    this._map.addLayer(layerObj.layer)
+    this._map.removeLayer(this._activeBaseLayer.layer)
     this._map.setZoom(this._map.getZoom())
-    this._map.fire('baselayerchange', {layer: layer})
-    this._activeBaseLayer = layer
+    this._map.fire('baselayerchange', {layer: layerObj.layer})
+    this._activeBaseLayer = layerObj
 
     //to be compatible with parent
     this._handlingClick = false
