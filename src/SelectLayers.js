@@ -30,8 +30,8 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
       } else {
         L.DomEvent
           .on(container, 'mouseover', this._expand, this)
-          //have to comment next line because it makes impossible to select baselayer in Chromium Version 25.0.1364.160 Ubuntu 12.04
-          //.on(container, 'mouseout', this._collapse, this)
+        //have to comment next line because it makes impossible to select baselayer in Chromium Version 25.0.1364.160 Ubuntu 12.04
+        //.on(container, 'mouseout', this._collapse, this)
         L.DomEvent.on(link, 'focus', this._expand, this)
       }
 
@@ -42,8 +42,14 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
 
     this._baseLayersList = L.DomUtil.create('select', className + '-base', form)
     L.DomEvent.on(this._baseLayersList, 'change', this._onBaseLayerOptionChange, this)
+
     this._separator = L.DomUtil.create('div', className + '-separator', form)
-    this._overlaysList = L.DomUtil.create('div', className + '-overlays', form)
+
+    this._overlaysList = L.DomUtil.create('select', className + '-overlays', form)
+    this._overlaysList.setAttribute('multiple', true)
+    //extend across the width of the container
+    this._overlaysList.style.width = '100%'
+    L.DomEvent.on(this._overlaysList, 'change', this._onOverlayLayerOptionChange, this)
 
     container.appendChild(form)
   },
@@ -57,7 +63,6 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
   },
 
   _changeBaseLayer: function (layerObj) {
-    //to be compatible with parent
     this._handlingClick = true
 
     this._map.addLayer(layerObj.layer)
@@ -66,16 +71,37 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     this._map.fire('baselayerchange', {layer: layerObj.layer})
     this._activeBaseLayer = layerObj
 
-    //to be compatible with parent
+    this._handlingClick = false
+  },
+
+  _onOverlayLayerOptionChange: function (e) {
+    //Note. Don't try to implement this function through .selectedIndex
+    //or delegation of click event. These methods have bunch of issues on Android devices.
+    this._handlingClick = true
+
+    var options = this._overlaysList.options
+    for (var i = 0; i < options.length; i++) {
+      var option = options[i]
+      var layer = this._layers[option.layerId].layer
+      if (option.selected) {
+        if (!this._map.hasLayer(layer)) {
+          this._map.addLayer(layer)
+        }
+      } else {
+        if (this._map.hasLayer(layer)) {
+          this._map.removeLayer(layer)
+        }
+      }
+    }
+
     this._handlingClick = false
   },
 
   _addItem: function (obj) {
+    var option = this._createOptionElement(obj)
     if (obj.overlay) {
-      //overlay items is handled the same as before
-      return L.Control.Layers.prototype._addItem.call(this, obj)
+      this._overlaysList.appendChild(option)
     } else {
-      var option = this._createOptionElement(obj)
       this._baseLayersList.appendChild(option)
     }
   },

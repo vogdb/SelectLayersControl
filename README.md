@@ -11,7 +11,8 @@ A Leaflet plugin which adds new control to switch between different layers on th
 ### The SelectLayersControl plugin solving this problem.
 
 ![control with select tag](screenshots/select.png "control with select tag")
-![tap on the select tag](screenshots/select-tap.png "tap on the select tag")
+![tap on the base layer select](screenshots/baseLayer-tap.png "tap on the base layer select tag")
+![tap on the overlay layers select](screenshots/overlayLayer-tap.png "tap on the overlay layers select tag")
 
 ## Example usage
 
