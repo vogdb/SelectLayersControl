@@ -34,17 +34,27 @@
             attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>'
             , opacity: 0.5
         })
+        var wind = L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>'
+            , opacity: 0.5
+        })
+        var temperature = L.tileLayer('http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>'
+            , opacity: 0.5
+        })
 
         var map = L.map('map', {
             center: new L.LatLng(39.73, -104.99), zoom: 10, layers: [mapnik, clouds]
         });
 
         var baseMaps = {
-            "Mapnik": mapnik, "Black and Whilte": blackAndWhite
+            "Mapnik": mapnik, "Black and White": blackAndWhite
         };
 
         var overlayMaps = {
-            "Clouds": clouds
+            "Clouds": clouds,
+            "Wind": wind,
+            "Temperature": temperature
         };
 
         //var control = L.control.layers(baseMaps, overlayMaps)
