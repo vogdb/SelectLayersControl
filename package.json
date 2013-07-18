@@ -1,6 +1,6 @@
 {
     "name":"SelectLayersControl",
-    "version":"0.1.2",
+    "version":"0.2.1",
     "description":"a Leaflet plugin which adds new control to switch between different layers on the map. New control extends L.Control.ActiveLayers and replaces radio button panel with select tag.",
     "repository":{
         "type":"git",
