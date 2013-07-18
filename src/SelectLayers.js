@@ -30,8 +30,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
       } else {
         L.DomEvent
           .on(container, 'mouseover', this._expand, this)
-        //have to comment next line because it makes impossible to select baselayer in Chromium Version 25.0.1364.160 Ubuntu 12.04
-        //.on(container, 'mouseout', this._collapse, this)
+          .on(container, 'mouseout', this._collapse, this)
         L.DomEvent.on(link, 'focus', this._expand, this)
       }
 
@@ -114,6 +113,12 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
       option.setAttribute('selected', true)
     }
     return option
+  }
+
+  , _collapse: function (e) {
+    if (e.target === this._container) {
+      L.Control.Layers.prototype._collapse.apply(this, arguments)
+    }
   }
 
 })
