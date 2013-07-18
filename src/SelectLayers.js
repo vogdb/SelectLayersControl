@@ -51,17 +51,17 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     L.DomEvent.on(this._overlaysList, 'change', this._onOverlayLayerOptionChange, this)
 
     container.appendChild(form)
-  },
+  }
 
-  _onBaseLayerOptionChange: function () {
+  ,_onBaseLayerOptionChange: function () {
     var selectedLayerIndex = this._baseLayersList.selectedIndex
     var selectedLayerOption = this._baseLayersList.options[selectedLayerIndex]
     var selectedLayer = this._layers[selectedLayerOption.layerId]
 
     this._changeBaseLayer(selectedLayer)
-  },
+  }
 
-  _changeBaseLayer: function (layerObj) {
+  ,_changeBaseLayer: function (layerObj) {
     this._handlingClick = true
 
     this._map.addLayer(layerObj.layer)
@@ -71,9 +71,9 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     this._activeBaseLayer = layerObj
 
     this._handlingClick = false
-  },
+  }
 
-  _onOverlayLayerOptionChange: function (e) {
+  ,_onOverlayLayerOptionChange: function (e) {
     //Note. Don't try to implement this function through .selectedIndex
     //or delegation of click event. These methods have bunch of issues on Android devices.
     this._handlingClick = true
@@ -94,18 +94,18 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     }
 
     this._handlingClick = false
-  },
+  }
 
-  _addItem: function (obj) {
+  ,_addItem: function (obj) {
     var option = this._createOptionElement(obj)
     if (obj.overlay) {
       this._overlaysList.appendChild(option)
     } else {
       this._baseLayersList.appendChild(option)
     }
-  },
+  }
 
-  _createOptionElement: function (obj) {
+  ,_createOptionElement: function (obj) {
     var option = document.createElement('option')
     option.layerId = L.stamp(obj.layer)
     option.innerHTML = obj.name
@@ -115,7 +115,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     return option
   }
 
-  , _collapse: function (e) {
+  ,_collapse: function (e) {
     if (e.target === this._container) {
       L.Control.Layers.prototype._collapse.apply(this, arguments)
     }
