@@ -14,7 +14,8 @@
         }
     ],
     "dependencies":{
-        "leaflet.active-layers": "git://github.com/vogdb/Leaflet.ActiveLayers.git"
+        "leaflet.active-layers": "git://github.com/vogdb/Leaflet.ActiveLayers.git#0.1.1",
+        "leaflet": "~0.7"
     },
     "devDependencies":{
         "grunt-contrib-watch":"~0.3.1",
