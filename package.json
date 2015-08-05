@@ -14,7 +14,7 @@
         }
     ],
     "dependencies":{
-        "leaflet.active-layers": "git://github.com/vogdb/Leaflet.ActiveLayers.git#0.1.1",
+        "leaflet.active-layers": "~0.2",
         "leaflet": "~0.7"
     },
     "devDependencies":{
