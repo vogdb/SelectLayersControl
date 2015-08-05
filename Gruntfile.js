@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         }
         , dist: {
             src: 'src/SelectLayers.js'
-            , dest: 'dist/leaflet.select-layers.min.js'
+            , dest: 'dist/<%= pkg.name %>.min.js'
       }
     }
 
