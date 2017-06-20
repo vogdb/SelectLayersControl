@@ -56,7 +56,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
   ,_onBaseLayerOptionChange: function () {
     var selectedLayerIndex = this._baseLayersList.selectedIndex
     var selectedLayerOption = this._baseLayersList.options[selectedLayerIndex]
-    var selectedLayer = this._layers[selectedLayerOption.layerId]
+    var selectedLayer = this._layers[selectedLayerIndex]
 
     this._changeBaseLayer(selectedLayer)
   }
