@@ -10,7 +10,7 @@
         "type": "git",
         "url": "https://github.com/vogdb/SelectLayersControl.git"
     },
-    "author": "Sanin Aleksey aka vogdb",
+    "author": "vogdb",
     "license": {
         "type": "MIT",
         "url": "https://github.com/vogdb/SelectLayersControl/blob/master/MIT-LICENSE.txt"
