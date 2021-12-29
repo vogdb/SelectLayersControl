@@ -15,7 +15,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
       L.DomEvent.on(container, 'click', L.DomEvent.stopPropagation)
     }
 
-    var form = this._form = L.DomUtil.create('form', className + '-list')
+    var section = this._section = L.DomUtil.create('section', className + '-list')
 
     if (this.options.collapsed) {
       var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container)
@@ -26,37 +26,37 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
         L.DomEvent
           .on(link, 'click', L.DomEvent.stopPropagation)
           .on(link, 'click', L.DomEvent.preventDefault)
-          .on(link, 'click', this._expand, this)
+          .on(link, 'click', this.expand, this)
       } else {
         L.DomEvent
-          .on(container, 'mouseover', this._expand, this)
-          .on(container, 'mouseout', this._collapse, this)
-        L.DomEvent.on(link, 'focus', this._expand, this)
+          .on(container, 'mouseover', this.expand, this)
+          .on(container, 'mouseout', this.collapse, this)
+        L.DomEvent.on(link, 'focus', this.expand, this)
       }
 
-      this._map.on('movestart', this._collapse, this)
+      this._map.on('movestart', this.collapse, this)
     } else {
-      this._expand()
+      this.expand()
     }
 
-    this._baseLayersList = L.DomUtil.create('select', className + '-base', form)
+    this._baseLayersList = L.DomUtil.create('select', className + '-base', section)
     L.DomEvent.on(this._baseLayersList, 'change', this._onBaseLayerOptionChange, this)
 
-    this._separator = L.DomUtil.create('div', className + '-separator', form)
+    this._separator = L.DomUtil.create('div', className + '-separator', section)
 
-    this._overlaysList = L.DomUtil.create('select', className + '-overlays', form)
+    this._overlaysList = L.DomUtil.create('select', className + '-overlays', section)
     this._overlaysList.setAttribute('multiple', true)
     //extend across the width of the container
     this._overlaysList.style.width = '100%'
     L.DomEvent.on(this._overlaysList, 'change', this._onOverlayLayerOptionChange, this)
 
-    container.appendChild(form)
+    container.appendChild(section)
   }
 
   ,_onBaseLayerOptionChange: function () {
     var selectedLayerIndex = this._baseLayersList.selectedIndex
     var selectedLayerOption = this._baseLayersList.options[selectedLayerIndex]
-    var selectedLayer = this._layers[selectedLayerOption.layerId]
+    var selectedLayer = this._getLayer(selectedLayerOption.layerId)
 
     this._changeBaseLayer(selectedLayer)
   }
@@ -81,7 +81,7 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
     var options = this._overlaysList.options
     for (var i = 0; i < options.length; i++) {
       var option = options[i]
-      var layer = this._layers[option.layerId].layer
+      var layer = this._getLayer(option.layerId).layer
       if (option.selected) {
         if (!this._map.hasLayer(layer)) {
           this._map.addLayer(layer)
@@ -113,12 +113,6 @@ L.Control.SelectLayers = L.Control.ActiveLayers.extend({
       option.setAttribute('selected', true)
     }
     return option
-  }
-
-  ,_collapse: function (e) {
-    if (e.target === this._container) {
-      L.Control.Layers.prototype._collapse.apply(this, arguments)
-    }
   }
 
 })
